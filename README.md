@@ -30,8 +30,10 @@ This project implements a Retrieval-Augmented Generation (RAG) system using Fast
 
 
 ![Screenshot 2025-03-03 at 1 17 19 PM (2)](https://github.com/user-attachments/assets/3b51bc7a-52df-441b-845a-897d4e5a5179)
-![Screenshot 2025-03-03 at 1 18 16 PM (2)](https://github.com/user-attachments/assets/c220d472-5d9a-49b6-913f-6ea22448aa70)
+
 ![Screenshot 2025-03-03 at 1 17 53 PM (2)](https://github.com/user-attachments/assets/03b74682-06d9-436c-992b-e2f769296f24)
+
+![Screenshot 2025-03-03 at 1 18 16 PM (2)](https://github.com/user-attachments/assets/c220d472-5d9a-49b6-913f-6ea22448aa70)
 
 ## Setup
 ---------
