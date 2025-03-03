@@ -81,7 +81,4 @@ Contributions are welcome! Please submit pull requests with detailed explanation
 
 ---
 
-Replace `insert-image-url-here` and `insert-link-here` with the actual URLs of your images and links. This format should make your README more visually appealing and easier to navigate.
 
----
-Answer from Perplexity: pplx.ai/share
