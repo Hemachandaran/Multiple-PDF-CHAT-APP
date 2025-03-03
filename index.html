@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple PDF CHAT APP</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom, #C9E4CA, #F7F7F7); /* Pastel green to light gray background */
+            color: #032B44; /* Deep Blue text */
+        }
+        
+        h1 {
+            color: #032B44; /* Deep Blue for headings */
+            text-align: center;
+            font-size: 36px; /* Larger font size */
+        }
+        
+        #upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #C5CAE9; /* Light blue border */
+            border-radius: 10px;
+            background-color: #F2F5F7; /* Light gray background */
+            margin: 20px auto;
+            width: fit-content;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        
+        #upload-form input[type="file"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            color: #032B44; /* Deep Blue text for input fields */
+            background-color: #F0F0F0; /* Light gray background for input fields */
+            border: 1px solid #C5CAE9; /* Light blue border */
+        }
+        
+        #upload-form button {
+            padding: 10px;
+            background-color: #82C7DE; /* Light Blue background */
+            color: #032B44; /* Deep Blue text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #upload-form button:hover {
+            background-color: #64B5F6; /* Lighter Blue on hover */
+        }
+        
+        #load-pdfs-button {
+            padding: 10px;
+            background-color: #82C7DE; /* Light Blue background */
+            color: #032B44; /* Deep Blue text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px auto;
+            display: block;
+        }
+        
+        #load-pdfs-button:hover {
+            background-color: #64B5F6; /* Lighter Blue on hover */
+        }
+        
+        #question-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #C5CAE9; /* Light blue border */
+            border-radius: 10px;
+            background-color: #F2F5F7; /* Light gray background */
+            margin: 20px auto;
+            width: fit-content;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        }
+        
+        #question-input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+            color: #032B44; /* Deep Blue text for input fields */
+            background-color: #F0F0F0; /* Light gray background for input fields */
+            border: 1px solid #C5CAE9; /* Light blue border */
+        }
+        
+        #answer-button {
+            padding: 10px;
+            background-color: #82C7DE; /* Light Blue background */
+            color: #032B44; /* Deep Blue text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #answer-button:hover {
+            background-color: #64B5F6; /* Lighter Blue on hover */
+        }
+        
+        #result {
+            padding: 10px;
+            background-color: #F7F7F7; /* Light gray background */
+            border: 1px solid #C5CAE9; /* Light blue border */
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .about-app {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Multiple PDF CHAT APP</h1>
+    <p class="about-app">This application utilizes RAG (Retrieval-Augmented Generation) and OpenAI technologies to provide accurate answers to your questions.</p>
+    <form id="upload-form">
+        <input type="file" id="pdf-file" accept=".pdf">
+        <button type="button" onclick="uploadPdf()">Upload PDF</button>
+    </form>
+    <button id="load-pdfs-button" onclick="loadPdfs()">Load PDFs</button>
+    <div id="question-section">
+        <input type="text" id="question-input" placeholder="Enter your question">
+        <button id="answer-button" onclick="answerQuestion()">Answer</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function uploadPdf() {
+            const fileInput = document.getElementById('pdf-file');
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+    
+            try {
+                const response = await fetch('http://127.0.0.1:8000/upload_pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    
+        async function loadPdfs() {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/load_pdfs', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    
+        async function answerQuestion() {
+            const questionInput = document.getElementById('question-input');
+            const question = questionInput.value;
+    
+            try {
+                const response = await fetch('http://127.0.0.1:8000/answer_question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ query: question })
+                });
+                const data = await response.json();
+                document.getElementById('result').innerText = data.result;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    </script>
+    
+</body>
+</html>
